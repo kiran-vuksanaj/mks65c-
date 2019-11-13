@@ -24,7 +24,7 @@ void smodef(char *buf, mode_t mode) {
 }
 
 int main() {
-  printf("Kiran Vuksanaj - Work 05 || \"I need information, STAT!\"\n");
+  printf("Kiran Vuksanaj - Work 05 \n \"I need information, STAT!\"\n");
   struct stat statbuf;
   int status;
   char *filepath = "./main.c";
@@ -34,10 +34,10 @@ int main() {
     printf("Error %d while statting file: %s\n",errno,strerror(errno));
     return 1;
   }
-  printf("metadata for [%s]\n",filepath);
-  printf("filesize: %ld bytes\n",statbuf.st_size);
+  printf("metadata for:\t%s\n",filepath);
+  printf("filesize: \t%ld bytes\n",statbuf.st_size);
   char mode[10];
   smodef(mode,statbuf.st_mode);
-  printf("mode of file: %s\n",mode);
-  printf("last accessed: %s\n",ctime(&statbuf.st_atim.tv_sec));
+  printf("mode: \t\t%s\n",mode);
+  printf("last accessed:\t%s\n",ctime(&statbuf.st_atim.tv_sec));
 }
