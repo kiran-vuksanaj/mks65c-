@@ -5,6 +5,24 @@
 #include<string.h>
 #include<errno.h>
 
+void smodef(char *buf, mode_t mode) {
+  // printf("[mode octal: %o]\n",mode);
+  short b = 0400; // the first byte to be considered is 0400, you can right shift until you've examined every bite
+  short i;
+  for( i = 0; i < 9; i++ ) {
+    // printf("[byte octal: %6o]\n",b);
+    if( b & mode ) {
+      if( i % 3 == 0 ) buf[i] = 'r';
+      if( i % 3 == 1 ) buf[i] = 'w';
+      if( i % 3 == 2 ) buf[i] = 'x';
+    }else {
+      buf[i] = '-';
+    }
+    b = b >> 1;
+  }
+  buf[i] = '\0';
+}
+
 int main() {
   printf("Kiran Vuksanaj - Work 05 || \"I need information, STAT!\"\n");
   struct stat statbuf;
@@ -17,7 +35,9 @@ int main() {
     return 1;
   }
   printf("metadata for [%s]\n",filepath);
-  printf("filesize: %ld\n",statbuf.st_size);
-  printf("mode of file: %o\n",statbuf.st_mode);
+  printf("filesize: %ld bytes\n",statbuf.st_size);
+  char mode[10];
+  smodef(mode,statbuf.st_mode);
+  printf("mode of file: %s\n",mode);
   printf("last accessed: %lu\n",statbuf.st_atim.tv_sec);
 }
