@@ -31,7 +31,7 @@ int main() {
   // stuff
   status = stat(filepath,&statbuf);
   if(status < 0) {
-    printf("Error %d while statting file: %s",errno,strerror(errno));
+    printf("Error %d while statting file: %s\n",errno,strerror(errno));
     return 1;
   }
   printf("metadata for [%s]\n",filepath);
@@ -39,5 +39,5 @@ int main() {
   char mode[10];
   smodef(mode,statbuf.st_mode);
   printf("mode of file: %s\n",mode);
-  printf("last accessed: %lu\n",statbuf.st_atim.tv_sec);
+  printf("last accessed: %s\n",ctime(&statbuf.st_atim.tv_sec));
 }
